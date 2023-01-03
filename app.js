@@ -13,8 +13,12 @@ const { redirect } = require('express/lib/response');
 // mailchimp : 
 const client = require("@mailchimp/mailchimp_marketing");
 
+require('dotenv').config()
+
+let API_KEY = process.env.API_KEY;
+
 client.setConfig({
-    apiKey: "1a2c8352ee425d9ac0b92a576525e6a9-us21",
+    apiKey: API_KEY,
     server: "us21",
 });
 
@@ -45,16 +49,18 @@ app.post(['/'], function(req, res){
                 }
             ]
         });
-        //console.log(response);
+
+        console.log(response);
         res.sendFile(__dirname + "/success.html");
 
-        // console.log(response.new_members);
     };
-    
+
+
+
     run().catch(e => 
         res.sendFile(__dirname + "/failure.html")
     );
-    // ============================================================
+
 });
 
 app.post('/failure', function(req, res){
